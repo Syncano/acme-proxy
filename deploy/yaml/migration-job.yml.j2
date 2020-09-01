@@ -1,0 +1,29 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: acme-proxy-migration
+spec:
+  template:
+    metadata:
+      name: acme-proxy-migration
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: acme-proxy
+          image: {{ IMAGE }}
+          command:
+            - "acme-proxy"
+            - "db"
+            - "up"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: 250m
+            limits:
+              memory: "512Mi"
+              cpu: 500m
+          envFrom:
+            - configMapRef:
+                name: acme-proxy
+            - secretRef:
+                name: acme-proxy-db-credentials

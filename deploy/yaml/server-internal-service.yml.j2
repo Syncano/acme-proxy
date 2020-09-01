@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: acme-proxy-internal
+  labels:
+    k8s-app: acme-proxy
+spec:
+  type: ClusterIP
+  selector:
+    app: acme-proxy
+  ports:
+    - name: grpc
+      protocol: TCP
+      port: 8000
+      targetPort: grpc
+    - name: http-metrics
+      protocol: TCP
+      port: 9080
+      targetPort: http-metrics

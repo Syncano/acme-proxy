@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  server:
+    command: acme_proxy --debug server
+    image: syncano/acme-proxy
+    build: .
+    ports:
+      - "8080:8000"
+    depends_on:
+      - postgresql
+      - redis
+    environment:
+      - SERVICE_NAME=acme-proxy
+      - TRACING_SAMPLING=1

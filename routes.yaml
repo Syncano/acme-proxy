@@ -1,0 +1,4 @@
+- path: "/*"
+  headers: {}
+  targets:
+    - https://postman-echo.com

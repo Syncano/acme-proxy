@@ -1,0 +1,4 @@
+- path: "/*"
+  headers: {}
+  targets:
+    - http://nginx-ingress-controller.ingress:80

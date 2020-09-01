@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: acme-proxy
+  labels:
+    k8s-app: acme-proxy
+spec:
+  type: LoadBalancer
+  selector:
+    app: acme-proxy
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: https
