@@ -24,6 +24,7 @@ func (q *Factory) NewUserManager(ctx context.Context) *UserManager {
 func (m *UserManager) LockTable() error {
 	var o *models.User
 	_, err := m.DB().ExecContext(m.DBContext().Context(), "LOCK TABLE ?", orm.GetTable(reflect.TypeOf(o).Elem()).FullName)
+
 	return err
 }
 

@@ -35,6 +35,7 @@ func LoadCertficate(raw []byte) (*tls.Certificate, error) {
 				return nil, fmt.Errorf("failure reading private key from: %w", err)
 			}
 		}
+
 		raw = rest
 	}
 
@@ -126,14 +127,17 @@ func LoadCertificateFromPEM(pemBytes []byte) (*tls.Certificate, string, error) {
 	if cert.Subject.CommonName != "" {
 		SANs = append(SANs, strings.ToLower(cert.Subject.CommonName))
 	}
+
 	if cert.DNSNames != nil {
 		sort.Strings(cert.DNSNames)
+
 		for _, dnsName := range cert.DNSNames {
 			if dnsName != cert.Subject.CommonName {
 				SANs = append(SANs, strings.ToLower(dnsName))
 			}
 		}
 	}
+
 	if cert.IPAddresses != nil {
 		for _, ip := range cert.IPAddresses {
 			if ip.String() != cert.Subject.CommonName {

@@ -15,10 +15,12 @@ import (
 
 func (s *Server) certAutoRefresh(ctx context.Context) (isDone bool, err error) {
 	l := s.log.Logger()
+
 	var certs []*models.Certificate
 
 	mgr := s.qf.NewCertManager(ctx)
 	q := mgr.ForRefreshQ(&certs, settings.Server.RefreshFailureThreshold).Order("id").Limit(settings.Server.AutoRefreshBatch)
+
 	l.Debug("Starting auto refresh of certs")
 
 	success, failed, err := s.certRefresh(mgr, certs, q)
@@ -28,6 +30,7 @@ func (s *Server) certAutoRefresh(ctx context.Context) (isDone bool, err error) {
 	for i, crt := range success {
 		successDomains[i] = crt.Domain
 	}
+
 	for i, crt := range failed {
 		failedDomains[i] = crt.Domain
 	}

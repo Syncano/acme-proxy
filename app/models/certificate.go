@@ -152,6 +152,7 @@ func (c *Certificate) FromAcmeCertificate(crt acme.Certificate) error {
 	if len(certBytes) == 0 {
 		return errors.New("no certificates were found while parsing the bundle")
 	}
+
 	if x509Cert.IsCA {
 		return fmt.Errorf("certificate for %s bundle starts with a CA certificate", crt.Domain)
 	}

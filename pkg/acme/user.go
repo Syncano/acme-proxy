@@ -53,5 +53,6 @@ func (u *User) Thumbprint() (string, error) {
 	}
 
 	u.thumbprint = base64.RawURLEncoding.EncodeToString(thumbBytes)
+
 	return u.thumbprint, nil
 }

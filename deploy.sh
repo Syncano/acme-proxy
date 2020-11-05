@@ -5,7 +5,6 @@ export VERSION="$2"
 TARGET="$1"
 PUSH=true
 MIGRATIONS=false
-DEFAULT_CARE_ARGUMENTS=""
 
 usage() { echo "* Usage: $0 <environment> <version> [--skip-gitlog][--skip-push][--migration]" >&2; exit 1; }
 [[ -n $TARGET ]] || usage
@@ -88,9 +87,9 @@ kubectl create configmap acme-proxy-routes --from-file=deploy/routes.yaml -o yam
 # Migrate database.
 if $MIGRATIONS; then
     echo "* Starting migration job."
-    export CARE_ARGUMENTS=${CARE_ARGUMENTS:-$DEFAULT_CARE_ARGUMENTS}
     kubectl delete job/acme-proxy-migration 2>/dev/null || true
     envsubst deploy/yaml/migration-job.yml.j2 | kubectl apply -f -
+
     for _ in {1..300}; do
         echo ". Waiting for migration job."
         sleep 1

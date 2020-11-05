@@ -124,6 +124,7 @@ func (s *Server) Get(ctx context.Context, req *pb.GetRequest) (*pb.GetResponse, 
 	crt := &models.Certificate{Domain: domain}
 	mgr := s.qf.NewCertManager(ctx)
 	err := mgr.OneByDomain(crt)
+
 	if err != nil {
 		return nil, err
 	}

@@ -98,8 +98,8 @@ func (a *Client) InitializeUser(user *User) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-	user.Registration = reg
 
+	user.Registration = reg
 	a.user = user
 
 	return user, nil
